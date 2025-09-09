@@ -27,8 +27,8 @@
                 {% endif %}              
                 <div id="prevnext" class="mx-auto max-w-3xl px-1 mt-12">
                     {% if siblings|length > 1 and not page.isFirst and not page.isLast %}
-  <div class="pb-4 text-2xl text-zinc-800 dark:text-zinc-300">Read Next</div>
-{% endif %}
+                    <div class="pb-4 text-2xl text-zinc-800 dark:text-zinc-300">Read Next</div>
+                    {% endif %}
                     <div id="prevnextwrapper" class="flex flex-col md:flex-row justify-between gap-6">
                         <div class="md:w-1/2">
                             {% if not page.isLast %}
