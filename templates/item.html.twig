@@ -5,36 +5,67 @@
             <article class="w-full py-5">
                 <div id="headline" class="mx-auto max-w-3xl px-1">
                     <h1 class="text-3xl text-zinc-800 dark:text-zinc-300">{{ page.title|e('html') }}</h1>
-                    <span class="text-sm"> <@ if @{ author } @> @{ author }<@ else @> @{ author | def(@{ shared_author }) } <@ end @> // <@ elements/date.php @></span>
+                    <span class="text-sm">{{ site.author.name }} // <time datetime="{{ page.date|date("c") }}">{{ page.date|date("j M, Y") }}</time></span>
                 </div>
-                <@ elements/header-image.php @>
-                <@ if not @{ :hideThumbnails } and not @{ iconPanel } @>
-                    <@ if @{ imageHeader } ~@>
+                {% if page.header.header_image_file %}
                 <div id="headimage" class="mx-auto md:max-w-4xl lg:max-w-5xl py-5">
-                    <img src="@{ imageHeader }" class="md:rounded-sm aspect-16/9 object-cover w-full"/>
+                    <img src="{{ page.media[page.header.header_image_file].url }}" class="md:rounded-sm aspect-16/9 object-cover w-full"/>
                 </div>                
-                    <@~ end ~@>
-                <@ end @>    
+                {% endif %}  
                 <div id="content" class="mx-auto max-w-3xl px-1 md:px-0">
                     {{ page.content|raw }}
                 </div>
-                <@ if @{ tags } @>
+                {% if page.taxonomy.tag %}
                 <div id="tagged" class="mx-auto max-w-3xl px-1 pt-8 pb-5 md:px-0">
                     <div class="text-zinc-800 dark:text-zinc-300 text-center w-full text-lg">Tagged with</div>
                     <ul class="mt-2 flex flex-wrap justify-center gap-3">
-                        <@ elements/tags.php @>
+                        {% for tag in page.taxonomy.tag %}
+                        <li><a href="{{ base_url }}/tag{{ config.system.param_sep }}{{ tag }}"	class="text-blue-600 dark:text-blue-400 hover:underline">#{{ tag }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
-                <@ end @>                
+                {% endif %}              
                 <div id="prevnext" class="mx-auto max-w-3xl px-1 mt-12">
-                    <@ newPagelist { type: 'siblings' } @>
-	                <@ if @{ :pagelistCount } @>
-                    <div class="pb-4 text-2xl text-zinc-800 dark:text-zinc-300">Read Next</div>
-                    <@ end @>
+                    {% if siblings|length > 1 and not page.isFirst and not page.isLast %}
+  <div class="pb-4 text-2xl text-zinc-800 dark:text-zinc-300">Read Next</div>
+{% endif %}
                     <div id="prevnextwrapper" class="flex flex-col md:flex-row justify-between gap-6">
-
-                        <@ elements/prev_next.php @>
-
+                        <div class="md:w-1/2">
+                            {% if not page.isLast %}
+                            <a href="{{ page.prevSibling.url }}"
+                                class="group block relative aspect-[16/9] overflow-hidden md:rounded-sm border border-zinc-200/70 dark:border-zinc-700/70 border-[0.5px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                aria-label="@{ title }">
+                                <!-- BG -->
+                                <div class="absolute inset-0 bg-zinc-100 dark:bg-zinc-900 bg-center bg-cover transition-transform duration-300 group-hover:scale-105"
+                                    style="background-image:url('{{ page.prevSibling.media[page.prevSibling.header.header_image_file].url }}')"></div>
+                                <!-- Gradient -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
+                                <!-- Content unten links -->
+                                <div class="absolute bottom-0 left-0 p-4">
+                                    <time datetime="<@ date.php @>" class="block text-xs text-zinc-300"><time datetime="{{ page.prevSibling.date|date("c") }}">{{ page.prevSibling.date|date("j M, Y") }}</time></time>
+                                    <h2 class="mt-0.5 text-lg font-semibold text-white line-clamp-2">{{ page.prevSibling.title }}</h2>
+                                </div>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="md:w-1/2">
+                            {% if not page.isFirst %}
+                            <a href="{{ page.nextSibling.url }}"
+                                class="group block relative aspect-[16/9] overflow-hidden md:rounded-sm border border-zinc-200/70 dark:border-zinc-700/70 border-[0.5px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                aria-label="@{ title }">
+                                <!-- BG -->
+                                <div class="absolute inset-0 bg-zinc-100 dark:bg-zinc-900 bg-center bg-cover transition-transform duration-300 group-hover:scale-105"
+                                    style="background-image:url('{{ page.nextSibling.media[page.nextSibling.header.header_image_file].url }}')"></div>
+                                <!-- Gradient -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
+                                <!-- Content unten links -->
+                                <div class="absolute bottom-0 left-0 p-4">
+                                    <time datetime="<@ date.php @>" class="block text-xs text-zinc-300"><time datetime="{{ page.nextSibling.date|date("c") }}">{{ page.nextSibling.date|date("j M, Y") }}</time></time>
+                                    <h2 class="mt-0.5 text-lg font-semibold text-white line-clamp-2">{{ page.nextSibling.title }}</h2>
+                                </div>
+                            </a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </article>

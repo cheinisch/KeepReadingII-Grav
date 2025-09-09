@@ -4,27 +4,20 @@
 {% block content %}
       		<section id="bloglist" class="mx-auto max-w-3xl px-1 py-10">
         		<header class="mb-6">
-          			<h1 class="text-3xl font-semibold text-zinc-900 dark:text-zinc-100">@{ title }</h1>
+          			<h1 class="text-3xl font-semibold text-zinc-900 dark:text-zinc-100">{{ page.title|e('html') }}</h1>
 					<@ if @{ ?filter } @>
 					<p class="text-lg text-zinc-500 dark:text-zinc-400">Filter: @{ ?filter } <a href="@{ url }" class="hover:text-red-600">&#x2715;</a></p>
 					<@ else @>
           			<p class="text-sm text-zinc-500 dark:text-zinc-400">Neueste Beiträge</p>
 					<@ end @>
         		</header>
-				<@ if @{ ?filter } @>
-				<!-- Dummy filter platz-->
-				<@ else @>
         		<div id="content">
-            		@{ +main }
-            		@{ text | markdown }
-        		</div>
-				<@ end @>				
+            		{{ page.content|raw }}	
+        		</div>			
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <@ foreach in pagelist @>
-						<@ if not @{ checkboxHideBloglist } @>
-							<@ elements/bloglist-item.php @>
-						<@ end @>
-                    <@ end @>
+                    {% for child in collection %}
+                        {% include 'partials/blog-list-item.html.twig' with {blog: page, page: child} %}
+                    {% endfor %}
                 </ul>
 				
 				<!-- Pagination -->

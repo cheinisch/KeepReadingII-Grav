@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html class="no-js" lang="de">
-    <head>
+    <head>    
         {% block head deferred %}
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% if page.title %}{{ page.title|e('html') }} // {% endif %}{{ site.title|e('html') }}</title>
         {% endblock head %}
 
@@ -66,7 +69,7 @@
             {% endblock %}
         </header>
         {% block body %}
-        <main class="bg-white dark:bg-zinc-950">
+        <main class="text-zinc-500 bg-white dark:bg-zinc-950">
             {% block content %}{% endblock %} 
         </main>
         {% endblock %}
