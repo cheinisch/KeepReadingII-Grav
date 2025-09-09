@@ -1,0 +1,15 @@
+name: KeepReading II
+slug: keepreading-II
+type: theme
+version: 0.0.1
+description: "KeepReadingII is a light Tailwindcss based theme"
+icon: empire
+author:
+  name: Heimfisch
+  email: christian@heinisch-design.de
+  url: https://heinisch-design.de
+homepage: https://github.com/cheinisch/KeepReadingII-Grav
+demo: https://dev.heinisch-design.de/demo/keepreadingII
+keywords: tailwindcss, tailwind, theme, core, modern, responsive, html5, css3
+bugs: https://github.com/cheinisch/KeepReadingII-Grav/issues
+license: MIT

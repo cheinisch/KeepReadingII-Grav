@@ -1,0 +1,56 @@
+title: Item
+'@extends':
+    type: default
+
+
+form:
+  fields:
+    tabs:
+
+      fields:
+        blog:
+          type: tab
+          title: Blog Item
+
+          fields:
+
+            header_options:
+              type: section
+              title: Header Options
+              underline: true
+
+            header.continue_link:
+              type: toggle
+              toggleable: true
+              label: DF Style Link
+              help: Daring Fireball style title link
+              highlight: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            header.header_image:
+              type: toggle
+              toggleable: true
+              label: Display Header Image
+              help: Enabled displaying of a header image
+              highlight: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+
+            header.header_image_file:
+              type: text
+              toggleable: true
+              label: Image File
+              help: image filename that exists in the page folder. If not provided, will use the first image found.
+              placeholder: "For example: myimage.jpg"
+
+            header.subheadline:
+              type: text
+              toggleable: true
+              label: Sub Headline
+              help: An Optional Subheadline for a Blogpost
+              placeholder: "just a headline"
