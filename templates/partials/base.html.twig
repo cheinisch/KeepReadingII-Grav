@@ -10,11 +10,19 @@
         {% do assets.addCss('theme://css/keepreading-ii.css') %}
         {% endblock %}
 
+        {% block javascripts %}
+        {% do assets.addJs('theme://js/navigation.js') %}
+        {% endblock %}
+
+        {% block assets deferred %}
         <!-- Stylesheets -->
         {{ assets.css()|raw }}
+        {% endblock %}
+
     </head>
     <body class="bg-neutral-200 dark:bg-neutral-950">
         <header class="sticky top-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur border-b border-zinc-200 dark:border-zinc-800">
+            {% block header_navigation %}
             <div class="mx-auto max-w-5xl px-4">
                 <div class="flex items-center justify-between h-16">
                 <!-- Logo / Brand -->
@@ -23,11 +31,8 @@
                 <!-- Desktop-Nav -->
                 <nav class="hidden md:block">
                     <ul class="flex items-center gap-6 text-zinc-600 dark:text-zinc-300">
-                        <@ foreach in pagelist @>
-                        <li>
-                            <a href="@{ url }" class="hover:text-zinc-900 dark:hover:text-white">@{ title }</a>
-                        </li>
-                        <@ end @>
+                        {% import 'macros/macros.html.twig' as macros %}
+                            {{ macros.desktop_nav_loop(pages) }}
                     </ul>
                 </nav>
 
@@ -51,16 +56,14 @@
                 role="dialog" aria-modal="true">
                 <div class="mx-auto max-w-5xl px-4 py-3">
                 <nav>
-                    <ul class="flex flex-col gap-2 text-zinc-700 dark:text-zinc-200">
-                        <@ foreach in pagelist @>
-                        <li>
-                            <a class="block rounded px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800" href="@{ url }">@{ title }</a>
-                        </li>
-                        <@ end @>
+                    <ul class="flex flex-col gap-2 text-zinc-700 dark:text-zinc-200">                        
+                        {% import 'macros/macros.html.twig' as macros %}
+                            {{ macros.mobile_nav_loop(pages) }}
                     </ul>
-                </nav>
+                </nav>  
                 </div>
             </div>
+            {% endblock %}
         </header>
         {% block body %}
         <main class="bg-white dark:bg-zinc-950">
@@ -70,6 +73,10 @@
         {% block footer %}
         {% include 'partials/footer.html.twig' %}
         {% endblock %}
+
+        
+        <!-- Javascripte -->
+        {{ assets.js()|raw }}
 
         <!-- Start Additional Tracking Code -->
         {% if theme_var('datatracking.enabled') %}

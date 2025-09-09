@@ -1,0 +1,19 @@
+{% macro desktop_nav_loop(page) %}
+  {% import _self as macros %}
+  {% for p in page.children.visible %}
+    {% set active_page = (p.active or p.activeChild) ? 'active' : '' %}
+    <li>
+        <a href="{{ p.url }}" class="hover:text-zinc-900 dark:hover:text-white">{{ p.menu }}</a>
+    </li>
+  {% endfor %}
+{% endmacro %}
+
+{% macro mobile_nav_loop(page) %}
+  {% import _self as macros %}
+  {% for p in page.children.visible %}
+    {% set active_page = (p.active or p.activeChild) ? 'active' : '' %}
+    <li>
+        <a class="block rounded px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800" href="{{ p.url }}">{{ p.menu }}</a>
+    </li>
+  {% endfor %}
+{% endmacro %}
