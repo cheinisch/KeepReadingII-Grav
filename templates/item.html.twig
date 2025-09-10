@@ -20,7 +20,7 @@
                     <div class="text-zinc-800 dark:text-zinc-300 text-center w-full text-lg">Tagged with</div>
                     <ul class="mt-2 flex flex-wrap justify-center gap-3">
                         {% for tag in page.taxonomy.tag %}
-                        <li><a href="{{ base_url }}/tag{{ config.system.param_sep }}{{ tag }}"	class="text-blue-600 dark:text-blue-400 hover:underline">#{{ tag }}</a></li>
+                        <li><a href="{{ page.parent.url }}/tag{{ config.system.param_sep }}{{ tag }}"	class="text-blue-600 dark:text-blue-400 hover:underline">#{{ tag }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

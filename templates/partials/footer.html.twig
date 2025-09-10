@@ -1,9 +1,10 @@
+{% set th = config.themes['keepreading-ii'] %}
         <footer class="bg-neutral-200 dark:bg-neutral-950 text-zinc-500 text-gray-800 dark:text-gray-300 w-full pb-2 border-t border-neutral-500 px-2">
             <div class="mx-auto max-w-3xl py-5 grid grid-cols-1 md:grid-cols-4 gap-6">
                 <!-- 2/4: Über diesen Blog -->
                 <section class="md:col-span-2">
-                <h2>@{ itemFooterHeadline }</h2>
-                <p>@{ itemFooterText }</p>
+                <h2>{{ th.footer_headline|default(page.title) }}</h2>
+                <p>{{ th.footer_description }}</p>
                 </section>
 
                 <!-- 1/4: Navigation -->
@@ -35,7 +36,10 @@
                     <@ if @{ itemYoutube } ~@>
                     <li><a href="https://youtube.com/@{ itemYoutube }" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">YouTube</a></li>
                     <@~ end @>
-                    <?php if ($rssfeed == 1) { echo '<li><a href="/feed" class="hover:text-zinc-900 dark:hover:text-zinc-100">RSS</a></li>'; } ?>
+                    {# RSS-Link nur anzeigen, wenn das Feed-Plugin aktiv ist #}
+                    {% if config.plugins.feed and config.plugins.feed.enabled %}
+                    <li><a href="{{ th.feed_url }}.rss" class="hover:text-zinc-900 dark:hover:text-zinc-100">RSS Feed</a></li>
+                    {% endif %}
                 </ul>
                 </section>
             </div>    

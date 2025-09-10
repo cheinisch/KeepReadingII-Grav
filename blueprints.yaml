@@ -13,3 +13,25 @@ demo: https://dev.heinisch-design.de/demo/keepreadingII
 keywords: tailwindcss, tailwind, theme, core, modern, responsive, html5, css3
 bugs: https://github.com/cheinisch/KeepReadingII-Grav/issues
 license: MIT
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      fields:
+        blog_tab:
+          type: tab
+          title: Blog
+          fields:
+            footer_headline:
+              type: text
+              label: Footer Headline
+              placeholder: "z. B. Random Stuff"
+            footer_description:
+              type: textarea
+              label: Footer Description
+              rows: 4
+            feed_url:
+              type: text
+              label: Feed URL
+              placeholder: "/feed"

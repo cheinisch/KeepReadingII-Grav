@@ -6,6 +6,9 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% if page.title %}{{ page.title|e('html') }} // {% endif %}{{ site.title|e('html') }}</title>
+        <link rel="alternate" type="application/atom+xml" title="My Feed" href="{{ base_url }}.atom" />
+        <link rel="alternate" type="application/rss+xml" title="My Feed" href="{{ base_url }}.rss" />
+        <link rel="alternate" type="application/json" title="My Feed" href="{{ base_url }}.json" />
         {% endblock head %}
 
         <!-- KeepreadingII CSS -->
