@@ -5,21 +5,53 @@
 {% set anchor_id   = page.header.anchor_id|default('reiseberichte') %}
 {% set selected    = page.header.selected_pages ?? [] %}
 
-{# Posts sammeln: entweder manuell gewählte Seiten (in der Reihenfolge),
-   sonst die neuesten N Kinder der Quellseite #}
+{# gemeinsame Zeitbasis (Integer) #}
+{% set now = "now"|date('U')|int %}
+
+{# ---- Manuelle Auswahl ---- #}
 {% if selected|length %}
   {% set posts = [] %}
   {% for r in selected %}
-    {% set p = page.find(r) %}
-    {% if p %}{% set posts = posts|merge([p]) %}{% endif %}
+    {% set p = pages.find(r) %}
+    {% if p %}
+      {# Flags/Timestamps holen #}
+      {% set pubflag = (p.published is defined ? p.published : p.published()) %}
+      {% set pubts   = (p.publishDate is defined and p.publishDate ? p.publishDate : 0)|int %}
+      {% set unpubts = (p.unpublishDate is defined and p.unpublishDate ? p.unpublishDate : 0)|int %}
+
+      {% set publish_ok   = (pubts == 0 or pubts <= now) %}
+      {% set unpublish_ok = (unpubts == 0 or unpubts >  now) %}
+
+      {% if pubflag and publish_ok and unpublish_ok and p.route != page.route %}
+        {% set posts = posts|merge([p]) %}
+      {% endif %}
+    {% endif %}
   {% endfor %}
+
+{# ---- Auto-Liste: Kinder der Quelle ---- #}
 {% else %}
   {% set blog_page = page.find(source) %}
-  {% set posts = blog_page ? blog_page.children.order('date','desc')|slice(0, count) : [] %}
+  {% set posts = [] %}
+  {% if blog_page %}
+    {% for c in blog_page.children.order('date','desc') %}
+      {% set pubflag = (c.published is defined ? c.published : c.published()) %}
+      {% set pubts   = (c.publishDate is defined and c.publishDate ? c.publishDate : 0)|int %}
+      {% set unpubts = (c.unpublishDate is defined and c.unpublishDate ? c.unpublishDate : 0)|int %}
+
+      {% set publish_ok   = (pubts == 0 or pubts <= now) %}
+      {% set unpublish_ok = (unpubts == 0 or unpubts >  now) %}
+
+      {% if pubflag and publish_ok and unpublish_ok and c.route != page.route %}
+        {% set posts = posts|merge([c]) %}
+      {% endif %}
+    {% endfor %}
+    {# nach dem Filtern begrenzen #}
+    {% set posts = posts|slice(0, count) %}
+  {% endif %}
 {% endif %}
 
+
 {# Hilfsfunktion: beste Bild-URL finden (Header-Feld bevorzugt, sonst erstes Medienbild) #}
-{# Hilfsfunktion: beste Bild-URL finden (featured_image_file bevorzugt) #}
 {% macro hero_image(post) %}
   {# Priorität:
      1) header.featured_image_file
@@ -50,7 +82,6 @@
     {{ url('theme://images/placeholder-16x9.jpg') }}
   {% endif %}
 {% endmacro %}
-
 
 <h2 id="{{ anchor_id }}" class="am-block">{{ title }}</h2>
 <am-pagelist class="am-block">
