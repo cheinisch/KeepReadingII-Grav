@@ -1,0 +1,56 @@
+title: Reiseberichte (Modul)
+'@extends':
+  type: default
+  context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          title: Inhalt
+          fields:
+            header.title:
+              type: text
+              label: Überschrift
+              default: Reiseberichte
+            header.anchor_id:
+              type: text
+              label: Anchor-ID (#id für H2)
+              default: reiseberichte
+            header.source:
+              type: pages
+              label: Blog-Quelle
+              help: Wähle die Blog-Listenseite (z. B. /travel-blog)
+              show_modular: false
+              show_root: false
+              validate:
+                required: true
+            header.count:
+              type: number
+              label: Anzahl Beiträge (Fallback)
+              default: 3
+              validate:
+                min: 1
+                max: 12
+            header.selected_pages:
+              type: pages
+              label: Beiträge manuell wählen (überschreibt Quelle/Anzahl)
+              multiple: true
+              show_modular: false
+              show_root: false
+        advanced:
+          type: tab
+          title: Hinweise
+          fields:
+            header._note:
+              type: display
+              markdown: true
+              label: ''
+              content: >
+                **Hinweis:** Wenn *Beiträge manuell wählen* gesetzt ist, wird
+                genau diese Reihenfolge gerendert. Sonst nimmt das Modul die
+                neuesten `Anzahl Beiträge` aus **Blog-Quelle**.

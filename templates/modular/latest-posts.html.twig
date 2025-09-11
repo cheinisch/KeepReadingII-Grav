@@ -1,0 +1,106 @@
+{# Modular: Reiseberichte-Liste (Featured + 2 kompakte) #}
+{% set source      = page.header.source|default('/travel-blog') %}
+{% set count       = page.header.count|default(3) %}
+{% set title       = page.header.title|default('Reiseberichte') %}
+{% set anchor_id   = page.header.anchor_id|default('reiseberichte') %}
+{% set selected    = page.header.selected_pages ?? [] %}
+
+{# Posts sammeln: entweder manuell gewählte Seiten (in der Reihenfolge),
+   sonst die neuesten N Kinder der Quellseite #}
+{% if selected|length %}
+  {% set posts = [] %}
+  {% for r in selected %}
+    {% set p = page.find(r) %}
+    {% if p %}{% set posts = posts|merge([p]) %}{% endif %}
+  {% endfor %}
+{% else %}
+  {% set blog_page = page.find(source) %}
+  {% set posts = blog_page ? blog_page.children.order('date','desc')|slice(0, count) : [] %}
+{% endif %}
+
+{# Hilfsfunktion: beste Bild-URL finden (Header-Feld bevorzugt, sonst erstes Medienbild) #}
+{# Hilfsfunktion: beste Bild-URL finden (featured_image_file bevorzugt) #}
+{% macro hero_image(post) %}
+  {# Priorität:
+     1) header.featured_image_file
+     2) header.imageCard
+     3) header.cover
+     4) erstes Bild aus den Page-Medien
+     5) Platzhalter
+  #}
+  {% set fname = post.header.featured_image_file
+      ?? post.header.imageCard
+      ?? post.header.cover
+      ?? null %}
+
+  {% if fname %}
+    {# A) Absolute URL? -> direkt nehmen #}
+    {% if fname matches '/^https?:\\/\\//i' %}
+      {{ fname }}
+    {# B) Datei im Seiten-Ordner vorhanden? -> Media-URL #}
+    {% elseif post.media[fname] is defined %}
+      {{ post.media[fname].url }}
+    {# C) Sonst (z. B. relativer Pfad) als Fallback direkt ausgeben #}
+    {% else %}
+      {{ fname }}
+    {% endif %}
+  {% elseif post.media.images|length %}
+    {{ (post.media.images|first).url }}
+  {% else %}
+    {{ url('theme://images/placeholder-16x9.jpg') }}
+  {% endif %}
+{% endmacro %}
+
+
+<h2 id="{{ anchor_id }}" class="am-block">{{ title }}</h2>
+<am-pagelist class="am-block">
+  <section class="btg mx-auto max-w-3xl px-1 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {# Featured (nur erstes Item) #}
+      {% if posts|length %}
+        {% set featured = posts|first %}
+        {% set rest = posts|slice(1) %}
+        {% set hero = _self.hero_image(featured) %}
+        {# Whitespace entfernen, damit kein %20 vor der URL landet #}
+        {% set hero_clean = hero|replace({"\n":"","\r":"","\t":""})|trim %}
+
+        <a href="{{ featured.url }}"
+           class="group block relative aspect-[16/9] overflow-hidden md:col-span-2 md:rounded-sm border border-zinc-200/70 dark:border-zinc-700/70 border-[0.5px] focus:outline-none focus:ring-2 focus:ring-blue-500 !no-underline hover:!no-underline focus:!no-underline visited:!no-underline"
+           aria-label="{{ featured.title|e }}">
+
+           <!-- Hintergrundbild: imageCard -> cover -> Platzhalter -->
+           <div class="absolute inset-0 bg-zinc-100 dark:bg-zinc-900 bg-center bg-cover transition-transform duration-300 group-hover:scale-105"
+                 style="background-image:url('{{ hero_clean }}')"></div>
+          <!-- Gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
+
+          <!-- Content -->
+          <div class="absolute bottom-0 left-0 p-4">
+            <time datetime="{{ featured.date|date('c') }}" class="block text-xs text-zinc-300">
+              {{ featured.date|date('d M, Y') }}
+            </time>
+            <h2 class="mt-0.5 text-xl md:text-2xl font-semibold text-white line-clamp-2">
+              {{ featured.title }}
+            </h2>
+          </div>
+        </a>
+
+        {# Kompakte Karten für die restlichen Items #}
+        {% for p in rest %}
+          <a href="{{ p.url }}"
+             class="group block relative overflow-hidden md:rounded-sm border border-zinc-200/70 dark:border-zinc-700/70 border-[0.5px] p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 !no-underline hover:!no-underline focus:!no-underline visited:!no-underline"
+             aria-label="{{ p.title|e }}">
+            <time datetime="{{ p.date|date('c') }}" class="block text-xs text-zinc-500 dark:text-zinc-400">
+              {{ p.date|date('d M, Y') }}
+            </time>
+            <h2 class="mt-0.5 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+              {{ p.title }}
+            </h2>
+          </a>
+        {% endfor %}
+      {% else %}
+        <p>Keine Beiträge gefunden.</p>
+      {% endif %}
+    </div>
+  </section>
+</am-pagelist>

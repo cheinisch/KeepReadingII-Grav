@@ -22,7 +22,7 @@
 {# 5) Pagination-Objekt holen #}
 {% set p = collection.params.pagination %}
 
-      		<section id="bloglist" class="mx-auto max-w-3xl px-1 py-10">
+      		<section id="bloglist" class="mx-auto max-w-3xl px-1 md:px-0 py-10">
         		<header class="mb-6">
           			<h1 class="text-3xl font-semibold text-zinc-900 dark:text-zinc-100">{{ page.title|e('html') }}</h1>
 					{% if active_tag %}

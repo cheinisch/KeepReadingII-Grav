@@ -1,3 +1,30 @@
-title: Item
+title: Page
 '@extends':
     type: default
+
+form:
+  fields:
+    tabs:
+      fields:
+        options:
+          type: tab
+          title: Optionen
+          fields:
+          
+            header.nav_footer:
+              type: toggle
+              label: Im Footer anzeigen
+              highlight: 0
+              default: 0
+              options:
+                1: Ja
+                0: Nein
+              validate:
+                type: bool
+
+            header.nav_footer_order:
+              type: number
+              label: Reihenfolge (Footer)
+              help: Kleinere Zahl = weiter vorne. Leer lassen für Standard.
+              validate:
+                min: 0

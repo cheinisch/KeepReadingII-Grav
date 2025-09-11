@@ -31,17 +31,17 @@ form:
               validate:
                 type: bool
 
-            header.header_image:
+            header.featured_image:
               type: toggle
               toggleable: true
-              label: Display Header Image
+              label: Display Featured Blog Image
               help: Enabled displaying of a header image
               highlight: 1
               options:
                 1: PLUGIN_ADMIN.ENABLED
                 0: PLUGIN_ADMIN.DISABLED
 
-            header.header_image_file:
+            header.featured_image_file:
               type: pagemediaselect
               toggleable: true
               label: Featured Image

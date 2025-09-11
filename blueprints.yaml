@@ -35,3 +35,19 @@ form:
               type: text
               label: Feed URL
               placeholder: "/feed"
+            github.social:
+              type: text
+              label: Github User Account
+              placeholder: ""
+            instagram.social:
+              type: text
+              label: instagram User Account
+              placeholder: ""              
+            twitter.social:
+              type: text
+              label: X (Twitter) User Account
+              placeholder: ""
+            youtube.social:
+              type: text
+              label: Youtube User Account
+              placeholder: ""

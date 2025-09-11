@@ -3,13 +3,13 @@
 
 {% block content %}            
             <article class="w-full py-5">
-                <div id="headline" class="mx-auto max-w-3xl px-1">
+                <div id="headline" class="mx-auto max-w-3xl px-1 md:px-0">
                     <h1 class="text-3xl text-zinc-800 dark:text-zinc-300">{{ page.title|e('html') }}</h1>
                     <span class="text-sm">{{ site.author.name }} // <time datetime="{{ page.date|date("c") }}">{{ page.date|date("j M, Y") }}</time></span>
                 </div>
-                {% if page.header.header_image_file %}
+                {% if page.header.featured_image_file %}
                 <div id="headimage" class="mx-auto md:max-w-4xl lg:max-w-5xl py-5">
-                    <img src="{{ page.media[page.header.header_image_file].url }}" class="md:rounded-sm aspect-16/9 object-cover w-full"/>
+                    <img src="{{ page.media[page.header.featured_image_file].url }}" class="md:rounded-sm aspect-16/9 object-cover w-full"/>
                 </div>                
                 {% endif %}  
                 <div id="content" class="mx-auto max-w-3xl px-1 md:px-0">
@@ -25,7 +25,7 @@
                     </ul>
                 </div>
                 {% endif %}              
-                <div id="prevnext" class="mx-auto max-w-3xl px-1 mt-12">
+                <div id="prevnext" class="mx-auto max-w-3xl px-1 md:px-0 mt-12">
                     {% if siblings|length > 1 and not page.isFirst and not page.isLast %}
                     <div class="pb-4 text-2xl text-zinc-800 dark:text-zinc-300">Read Next</div>
                     {% endif %}
