@@ -1,26 +1,31 @@
 {% extends 'partials/base.html.twig' %}
 
+{% set collection = page.collection() %}
 
 {% block content %}
 
-{# 1) Basis-Collection holen #}
-{% set base = page.collection() %}
+{# --- 1) Param-Separator und aktuelle URL --- #}
+{% set sep  = config.system.param_sep %}      {# meist ":" #}
+{% set path = uri.path %}
 
-{# 2) aktive Filter #}
-{% set active_tag       = uri.param('tag') ?: uri.query('tag') %}
-{% set active_category  = uri.param('category') ?: uri.query('category') %}
+{# --- 2) Tag/Kategorie aus Param oder Query holen --- #}
+{% set active_tag      = uri.param('tag') ?: uri.query('tag') %}
+{% set active_category = uri.param('category') ?: uri.query('category') %}
 
-{# 3) Filter anwenden (auf derselben Collection) #}
-{% set collection = base %}
-{% if active_tag %}{% set collection = collection.filterBy('taxonomy.tag', active_tag) %}{% endif %}
-{% if active_category %}{% set collection = collection.filterBy('taxonomy.category', active_category) %}{% endif %}
+{# --- 3) Fallback: aus dem Pfad herauslösen, falls param() leer ist --- #}
+{% if not active_tag and (('/tag' ~ sep) in path) %}
+  {% set tmp = path|split('/tag' ~ sep) %}
+  {% set active_tag = (tmp|length > 1) ? tmp[1]|split('/')[0] : null %}
+{% endif %}
+{% if not active_category and (('/category' ~ sep) in path) %}
+  {% set tmp = path|split('/category' ~ sep) %}
+  {% set active_category = (tmp|length > 1) ? tmp[1]|split('/')[0] : null %}
+{% endif %}
 
-{# 4) Seite aus URL setzen (vor pagination holen!) #}
-{% set current_page = (uri.param('page') ?: uri.query('page') ?: 1)|int %}
-{% do collection.params.set('page', current_page) %}
+{# --- 4) (optional) Normalisierung für spätere Filter (lowercase, "-" -> " ") --- #}
+{% set tag_norm = active_tag ? active_tag|lower|replace({'-':' '}) : null %}
+{% set cat_norm = active_category ? active_category|lower|replace({'-':' '}) : null %}
 
-{# 5) Pagination-Objekt holen #}
-{% set p = collection.params.pagination %}
 
       		<section id="bloglist" class="mx-auto max-w-3xl px-1 md:px-0 py-10">
         		<header class="mb-6">

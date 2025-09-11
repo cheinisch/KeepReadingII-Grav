@@ -29,7 +29,7 @@
 
     {# Page numbers #}
       {# Zahlen #}
-    <div class="-mt-px flex items-center">
+    <div class="hidden -mt-px md:flex items-center">
       {% set cur  = uri.param('page')|default('1') %}
       {% set total = p.count %}
       {% set lastPrinted = 0 %}
