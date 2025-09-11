@@ -51,3 +51,20 @@ form:
               type: text
               label: Youtube User Account
               placeholder: ""
+              
+            datatracking.enabled:
+              type: toggle
+              label: Tracking aktiv
+              highlight: 0
+              default: 0
+              options:
+                1: Aktiv
+                0: Aus
+              validate:
+                type: bool
+
+            datatracking.code:
+              type: textarea
+              label: Tracking Code (HTML/JS)
+              help: Wird am Seitenende ausgegeben.
+              rows: 6              
