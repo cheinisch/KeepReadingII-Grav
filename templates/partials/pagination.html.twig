@@ -1,7 +1,6 @@
 {# partials/pagination-tailwind.html.twig
    expects: pagination = collection.params.pagination #}
-
-{% set p = pagination %}
+{% set p = collection.params.pagination %}
 {% if p and p.count > 1 %}
   {% set total = p.count %}
 
