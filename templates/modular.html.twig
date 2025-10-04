@@ -1,10 +1,10 @@
 {% extends 'partials/base.html.twig' %}
 {% block content %}
             <article class="w-full py-5">
-                <div id="headline" class="mx-auto max-w-3xl px-1 md:px-0">
+                <div id="headline" class="mx-auto max-w-3xl px-2 md:px-0">
                     <h1 class="text-3xl text-zinc-800 dark:text-zinc-300">{{ page.title|e('html') }}</h1>
                 </div>
-                <div id="content" class="mx-auto max-w-3xl px-1 md:px-0">
+                <div id="content" class="mx-auto max-w-3xl px-2 md:px-0">
                     {{ page.content|raw }}
                 
                     {# WICHTIG: Hier werden die Module gerendert #}
