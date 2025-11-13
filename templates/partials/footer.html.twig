@@ -55,6 +55,9 @@
                     {% if th.youtube.social %}
                     <li><a href="https://youtube.com/{{ th.youtube.social }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">YouTube</a></li>
                     {% endif %}
+                    {% if th.linkedin.social %}
+                    <li><a href="https://linkedin.com/in/{{ th.linkedin.social }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">YouTube</a></li>
+                    {% endif %}
                     {# RSS-Link nur anzeigen, wenn das Feed-Plugin aktiv ist #}
                     {% if config.plugins.feed and config.plugins.feed.enabled %}
                     <li><a href="{{ th.feed_url }}.rss" class="hover:text-zinc-900 dark:hover:text-zinc-100">RSS Feed</a></li>

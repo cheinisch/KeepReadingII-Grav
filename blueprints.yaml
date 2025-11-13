@@ -35,13 +35,23 @@ form:
               type: text
               label: Feed URL
               placeholder: "/feed"
+            icons.social:
+              type: toggle
+              label: Zeige nur Socialmedia Icons
+              highlight: 1
+              default: 0
+              options:
+                1: Aktiv
+                0: Aus
+              validate:
+                type: bool  
             github.social:
               type: text
               label: Github User Account
               placeholder: ""
             instagram.social:
               type: text
-              label: instagram User Account
+              label: Instagram User Account
               placeholder: ""              
             twitter.social:
               type: text
@@ -51,7 +61,10 @@ form:
               type: text
               label: Youtube User Account
               placeholder: ""
-              
+            linkedin.social:
+              type: text
+              label: LinkedIn Account
+              placeholder: ""  
             datatracking.enabled:
               type: toggle
               label: Tracking aktiv
