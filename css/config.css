@@ -27,12 +27,12 @@
 
   /* Links */
   #content a {
-    @apply text-sky-600 dark:text-sky-400 hover:underline-offset-2 hover:underline hover:decoration-1 hover:text-sky-700 dark:hover:text-sky-300;
+    @apply text-sky-500 dark:text-sky-500 hover:underline-offset-2 hover:underline hover:decoration-1 hover:text-cyan-500 dark:hover:text-cyan-500;
   }
 
   /* Zitate */
   #content blockquote {
-    @apply my-6 border-l-4 border-zinc-200 dark:border-sky-800 pl-4 italic text-zinc-500 dark:text-zinc-500;
+    @apply my-6 border-l-4 border-zinc-200 dark:border-sky-600 pl-4 italic text-zinc-500 dark:text-zinc-500;
   }
   #content blockquote p { @apply my-2; }
 
