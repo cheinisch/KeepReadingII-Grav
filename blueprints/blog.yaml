@@ -1,3 +1,36 @@
 title: Blog
 '@extends':
-    type: default
+  type: default
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+
+      fields:
+        blog:
+          type: tab
+          title: Blog
+
+          fields:
+            header.content.limit:
+              type: number
+              label: Number of blog items
+              help: How many blog posts should be displayed on this page?
+              default: 10
+              validate:
+                type: int
+                min: 1
+
+            header.content.pagination:
+              type: toggle
+              label: Enable pagination
+              help: Turn pagination on or off for this page. Requires the Pagination plugin to be enabled.
+              default: true
+              highlight: true
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool

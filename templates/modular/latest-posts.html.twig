@@ -54,13 +54,13 @@
 {# Hilfsfunktion: beste Bild-URL finden (Header-Feld bevorzugt, sonst erstes Medienbild) #}
 {% macro hero_image(post) %}
   {# Priorität:
-     1) header.featured_image_file
+     1) header.header_image_file
      2) header.imageCard
      3) header.cover
      4) erstes Bild aus den Page-Medien
      5) Platzhalter
   #}
-  {% set fname = post.header.featured_image_file
+  {% set fname = post.header.header_image_file
       ?? post.header.imageCard
       ?? post.header.cover
       ?? null %}

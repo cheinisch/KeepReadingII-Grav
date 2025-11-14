@@ -53,7 +53,9 @@
 				<!-- Pagination -->
 				
 				{# Pagination anzeigen (wenn aktiv) #}
-				{% if config.plugins.pagination.enabled and collection.params.pagination %}
+				{% if config.plugins.pagination.enabled 
+					and collection.params.pagination 
+					and page.header.content.pagination %}
 				
 				{% include 'partials/pagination.html.twig' with {
 					blog: page,

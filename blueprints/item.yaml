@@ -19,19 +19,7 @@ form:
               title: Header Options
               underline: true
 
-            header.continue_link:
-              type: toggle
-              toggleable: true
-              label: DF Style Link
-              help: Daring Fireball style title link
-              highlight: 1
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-
-            header.featured_image:
+            header.header_image:
               type: toggle
               toggleable: true
               label: Display Featured Blog Image
@@ -41,7 +29,7 @@ form:
                 1: PLUGIN_ADMIN.ENABLED
                 0: PLUGIN_ADMIN.DISABLED
 
-            header.featured_image_file:
+            header.header_image_file:
               type: pagemediaselect
               toggleable: true
               label: Featured Image
@@ -54,3 +42,4 @@ form:
               label: Sub Headline
               help: An Optional Subheadline for a Blogpost
               placeholder: "just a headline"
+         
