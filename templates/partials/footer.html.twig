@@ -9,6 +9,7 @@
   {% endif %}
 {% endfor %}
         <footer class="bg-neutral-200 dark:bg-neutral-950 text-zinc-500 text-gray-800 dark:text-gray-300 w-full pb-2 border-t border-neutral-500 px-2">
+            {% if th.footer.enabled %}
             <div class="mx-auto max-w-3xl py-5 grid grid-cols-1 md:grid-cols-4 gap-6">
                 <!-- 2/4: Über diesen Blog -->
                 <section class="md:col-span-2">
@@ -17,8 +18,9 @@
                 </section>
 
                 <!-- 1/4: Navigation -->
+                {% if th.linklist.enabled %}
                 <section class="md:col-span-1">
-                <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">Some Links</h3>
+                <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">{{ th.linklist.title }}</h3>
                 <ul class="mt-3 flex flex-col gap-2">
                 {% set count = 0 %}
                 {% for p in pages.children %}
@@ -37,35 +39,118 @@
                     <li class="text-sm text-zinc-500">No footer links defined</li>
                 {% endif %}
                 </ul>
-                </section>                
+                </section>  
+                {% endif %}              
 
                 <!-- 1/4: Social Media -->
+                {% if th.social.enabled %}
                 <section class="md:col-span-1">
-                <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">Social Media</h3>
+                <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">{{ th.social.title }}</h3>
+                {% if th.social.icons %}
+                    {# --- ICON MODE (horizontal) --- #}
+                    <ul class="mt-3 flex flex-row gap-4 items-center text-xl">
+
+                        {% if th.social.github %}
+                        <li>
+                            <a href="https://github.com/{{ th.social.github }}" target="_blank" rel="noopener"
+                            class="hover:text-zinc-900 dark:hover:text-zinc-100">
+                                <!-- GitHub Icon -->
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.45 7.9 10.98.6.1.82-.25.82-.58v-2.1c-3.22.7-3.9-1.37-3.9-1.37-.55-1.4-1.35-1.78-1.35-1.78-1.1-.75.08-.74.08-.74 1.22.1 1.86 1.26 1.86 1.26 1.08 1.86 2.82 1.32 3.5 1 .1-.8.42-1.33.76-1.64-2.57-.3-5.28-1.3-5.28-5.77 0-1.27.45-2.3 1.2-3.12-.12-.3-.52-1.53.12-3.18 0 0 .97-.32 3.18 1.2a10.8 10.8 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.52 3.18-1.2 3.18-1.2.64 1.65.24 2.88.12 3.18.75.82 1.2 1.85 1.2 3.12 0 4.48-2.72 5.47-5.3 5.76.44.38.82 1.1.82 2.22v3.28c0 .35.22.7.84.58A10.99 10.99 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if th.social.instagram %}
+                        <li>
+                            <a href="https://instagram.com/{{ th.social.instagram }}" target="_blank" rel="noopener"
+                            class="hover:text-zinc-900 dark:hover:text-zinc-100">
+                                <!-- Instagram Icon -->
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if th.social.twitter %}
+                        <li>
+                            <a href="https://x.com/{{ th.social.twitter }}" target="_blank" rel="noopener"
+                            class="hover:text-zinc-900 dark:hover:text-zinc-100">
+                                <!-- X Icon -->
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18.9 2H22l-7.9 9.1L23.3 22h-7.1l-5.6-7.3L4 22H1l8.5-9.8L.7 2H7.9l5 6.6L18.9 2z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if th.social.youtube %}
+                        <li>
+                            <a href="https://youtube.com/{{ th.social.youtube }}" target="_blank" rel="noopener"
+                            class="hover:text-zinc-900 dark:hover:text-zinc-100">
+                                <!-- YouTube Icon -->
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.5 6.2s-.2-1.7-.8-2.4c-.8-.9-1.6-.9-2-1C17.3 2.5 12 2.5 12 2.5h0s-5.3 0-8.7.3c-.4.1-1.2.1-2 1C.7 4.5.5 6.2.5 6.2S0 8.1 0 10v2c0 1.9.5 3.8.5 3.8s.2 1.7.8 2.4c.8.9 1.8.9 2.3 1 1.7.2 7.2.3 7.2.3s5.3 0 8.7-.3c.4-.1 1.2-.1 2-1 .6-.7.8-2.4.8-2.4s.5-1.9.5-3.8v-2c0-1.9-.5-3.8-.5-3.8zM9.8 14.7V8.3l6.2 3.2-6.2 3.2z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if th.social.linkedin %}
+                        <li>
+                            <a href="https://linkedin.com/in/{{ th.social.linkedin }}" target="_blank" rel="noopener"
+                            class="hover:text-zinc-900 dark:hover:text-zinc-100">
+                                <!-- LinkedIn Icon -->
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M4.98 3.5A2.5 2.5 0 012.5 6a2.5 2.5 0 112.48-2.5zM2.5 8.5h5v14h-5v-14zm7.5 0h4.8v2h.1c.6-1 2.1-2.1 4.3-2.1 4.6 0 5.3 3 5.3 6.8v7.3h-5v-6.5c0-1.6 0-3.6-2.2-3.6-2.2 0-2.5 1.7-2.5 3.5v6.6h-5v-14z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if config.plugins.feed and config.plugins.feed.enabled %}
+                        <li>
+                            <a href="{{ th.feed_url }}.rss" class="hover:text-zinc-900 dark:hover:text-zinc-100">
+                                <!-- RSS Icon -->
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M6 17a3 3 0 110 6 3 3 0 010-6zm-6-9v4c7.2 0 13 5.8 13 13h4C17 15.4 8.6 7 0 7zm0-7v4c12 0 22 9.8 22 22h4C26 10.3 15.7 0 0 0z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+
+                {% else %}
                 <ul class="mt-3 flex flex-col gap-2">
-                    {% if th.github.social %}
-                    <li><a href="https://github.com/{{ th.github.social }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">GitHub</a></li>
+                    {% if th.social.github %}
+                    <li><a href="https://github.com/{{ th.social.github }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">GitHub</a></li>
                     {% endif %}
-                    {% if th.instagram.social %}
-                    <li><a href="https://instagram.com/{{ th.instagram.social }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">Instagram</a></li>
+                    {% if th.social.instagram %}
+                    <li><a href="https://instagram.com/{{ th.socialinstagram }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">Instagram</a></li>
                     {% endif %}
-                    {% if th.twitter.social %}
-                    <li><a href="https://x.com/{{ th.twitter.social }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">X (Twitter)</a></li>
+                    {% if th.social.twitter %}
+                    <li><a href="https://x.com/{{ th.social.twitter }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">X (Twitter)</a></li>
                     {% endif %}
-                    {% if th.youtube.social %}
-                    <li><a href="https://youtube.com/{{ th.youtube.social }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">YouTube</a></li>
+                    {% if th.social.youtube %}
+                    <li><a href="https://youtube.com/{{ th.social.youtube }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">YouTube</a></li>
                     {% endif %}
-                    {% if th.linkedin.social %}
-                    <li><a href="https://linkedin.com/in/{{ th.linkedin.social }}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">YouTube</a></li>
+                    {% if th.social.linkedin %}
+                    <li><a href="https://linkedin.com/in/{{ th.social.linkedin}}" target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">YouTube</a></li>
                     {% endif %}
                     {# RSS-Link nur anzeigen, wenn das Feed-Plugin aktiv ist #}
                     {% if config.plugins.feed and config.plugins.feed.enabled %}
                     <li><a href="{{ th.feed_url }}.rss" class="hover:text-zinc-900 dark:hover:text-zinc-100">RSS Feed</a></li>
                     {% endif %}
                 </ul>
+                {% endif %}
                 </section>
-            </div>    
-            <div class="mx-auto max-w-3xl border-t border-neutral-500 py-5">
+                {% endif %}
+            </div>
+            {% endif %}  
+            <div class="mx-auto max-w-3xl {% if th.footer.enabled %}border-t border-neutral-500{% endif %}  py-5">
                 &copy; 2025 {{ site.title|e('html') }} - Published with GRAV
             </div>            
         </footer>

@@ -22,23 +22,102 @@ form:
       fields:
         blog_tab:
           type: tab
-          title: Blog
+          title: Footer
           fields:
+
+            ##########################
+            # Footer Settings
+            ##########################
+            footer_settings_section:
+              type: section
+              title: Footer Settings
+
+            footer.enabled:
+              type: toggle
+              label: Enable the footer
+              highlight: 1
+              default: 1
+              options:
+                1: Aktiv
+                0: Aus
+              validate:
+                type: bool  
+
             footer_headline:
               type: text
               label: Footer Headline
               placeholder: "z. B. Random Stuff"
+
             footer_description:
               type: textarea
               label: Footer Description
               rows: 4
+
             feed_url:
               type: text
               label: Feed URL
               placeholder: "/feed"
-            icons.social:
+
+        link_tab:
+          type: tab
+          title: Link List
+          fields:
+
+            ##########################
+            # Link List
+            ##########################
+            link_list_section:
+              type: section
+              title: Link List
+
+            linklist.enabled:
               type: toggle
-              label: Zeige nur Socialmedia Icons
+              label: Enable the link list
+              highlight: 1
+              default: 1
+              options:
+                1: Aktiv
+                0: Aus
+              validate:
+                type: bool               
+
+            linklist.title:
+              type: text
+              label: Headline for linklist
+              placeholder: "Some Links"
+
+        social_tab:
+          type: tab
+          title: Social Media
+          fields:
+
+
+            ##########################
+            # Social Media
+            ##########################
+            social_media_section:
+              type: section
+              title: Social Media
+
+            social.enabled:
+              type: toggle
+              label: Enable social media information
+              highlight: 1
+              default: 1
+              options:
+                1: Aktiv
+                0: Aus
+              validate:
+                type: bool             
+
+            social.title:
+              type: text
+              label: Headline for Social Media list
+              placeholder: "Social Media"
+
+            social.icons:
+              type: toggle
+              label: Show only icons
               highlight: 1
               default: 0
               options:
@@ -46,26 +125,45 @@ form:
                 0: Aus
               validate:
                 type: bool  
-            github.social:
+
+            social.github:
               type: text
               label: Github User Account
               placeholder: ""
-            instagram.social:
+
+            social.instagram:
               type: text
               label: Instagram User Account
               placeholder: ""              
-            twitter.social:
+
+            social.twitter:
               type: text
               label: X (Twitter) User Account
               placeholder: ""
-            youtube.social:
+
+            social.youtube:
               type: text
               label: Youtube User Account
               placeholder: ""
-            linkedin.social:
+
+            social.linkedin:
               type: text
               label: LinkedIn Account
-              placeholder: ""  
+              placeholder: ""
+
+        tracking_tab:
+          type: tab
+          title: Tracking
+          fields:
+
+
+            ##########################
+            # Tracking
+            ##########################
+            social_media_section:
+              type: section
+              title: Tracking
+
             datatracking.enabled:
               type: toggle
               label: Tracking aktiv
@@ -81,4 +179,4 @@ form:
               type: textarea
               label: Tracking Code (HTML/JS)
               help: Wird am Seitenende ausgegeben.
-              rows: 6              
+              rows: 6
