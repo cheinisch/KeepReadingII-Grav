@@ -25,7 +25,7 @@ git clone https://github.com/cheinisch/KeepReadingII-Grav keepreading-ii
 ```
 ### Activate the theme
 
-In your ´user/config/system.yaml´:
+In your `user/config/system.yaml`:
 ```
 system:
   pages:
@@ -33,10 +33,39 @@ system:
 ```
 Or simply activate it via Grav Admin -> Themes.
 
-## Customization
+## Configuration
 
-* Modify templates in ´/templates/´
-* Extend layouts easily to match your brand or structure
+All options are available in the Grav Admin Panel under:
+Themes -> KeepReading II
+
+Alternatively, edit:
+```
+user/config/themes/keepreading-ii.yaml
+```
+
+### Footer Settings
+
+* Enable the footer - turn the footer on/off
+* Footer Headline - title displayed above the footer content
+* Footer Description - short descriptive text
+* Feed URL - e.g., `/feed` for RSS/Atom feeds
+
+### Social Media
+
+* Headline - title above the link section
+* Show only social media icons - switch between icon-only or text link list
+* Social fields:
+* GitHub
+* Instagram
+* X (Twitter)
+* YouTube
+* LinkedIn
+
+### Link List & Tracking
+
+* Link list headline - custom title
+* Tracking enabled - toggle tracking on/off
+* Tracking Code (HTML/JS) - inject analytics or custom scripts at the bottom of the page
 
 ## Requirements
 
@@ -47,7 +76,7 @@ Or simply activate it via Grav Admin -> Themes.
 ## License
 
 Released under the MIT License.
-See the ´LICENSE´ file for details.
+See the `LICENSE` file for details.
 
 ## Demo
 
