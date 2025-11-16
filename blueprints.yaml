@@ -36,7 +36,7 @@ form:
               type: toggle
               label: Enable the footer
               highlight: 1
-              default: 1
+              default: 0
               options:
                 1: Aktiv
                 0: Aus
@@ -74,7 +74,7 @@ form:
               type: toggle
               label: Enable the link list
               highlight: 1
-              default: 1
+              default: 0
               options:
                 1: Aktiv
                 0: Aus
