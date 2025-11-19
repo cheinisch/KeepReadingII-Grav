@@ -9,6 +9,37 @@
         <link rel="alternate" type="application/atom+xml" title="My Feed" href="{{ base_url }}.atom" />
         <link rel="alternate" type="application/rss+xml" title="My Feed" href="{{ base_url }}.rss" />
         <link rel="alternate" type="application/json" title="My Feed" href="{{ base_url }}.json" />
+
+        <!-- OpenGraph -->
+        {% set og_image = page.media.images[page.header.header_image] ?: page.media.images|first %}
+        {% set og_description = '' %}
+        {# 1. Priorität: Beschreibung aus Frontmatter #}
+        {% if page.header.description %}
+            {% set og_description = page.header.description|e('html') %}
+        {% else %}
+            {# 2. Priorität: Zusammenfassung / erster Absatz #}
+            {% if page.summary is not empty %}
+                {% set og_description = page.summary|striptags|trim|slice(0, 200)|e('html') %}
+            {% else %}
+                {# 3. Fallback #}
+                {% set og_description = site.description|default('Eine Seite auf ' ~ site.title)|e('html') %}
+            {% endif %}
+        {% endif %}
+        {% if page.template starts with 'modular' %}
+            {# Modular Pages sind meist "website" #}
+            {% set og_type = 'website' %}
+        {% elseif page.template == 'item' %}
+            {# Blog- oder Artikel-Ansicht #}
+            {% set og_type = 'article' %}
+        {% else %}
+            {% set og_type = 'website' %}
+        {% endif %}
+        <meta property="og:title" content="{% if page.title %}{{ page.title|e('html') }} // {% endif %}{{ site.title|e('html') }}">
+        <meta property="og:description" content="{{ og_description }}">
+        <meta property="og:image" content="{{ og_image.url }}">
+        <meta property="og:url" content="{{ page.url }}">
+        <meta property="og:type" content="{{ og_type }}">
+
         {% endblock head %}
 
         <!-- KeepreadingII CSS -->
