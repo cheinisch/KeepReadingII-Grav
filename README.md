@@ -54,7 +54,7 @@ user/config/themes/keepreading-ii.yaml
 
 * Headline - title above the link section
 * Show only social media icons - switch between icon-only or text link list
-  * Social fields:
+* Social fields:
   * GitHub
   * Instagram
   * X (Twitter)
