@@ -32,39 +32,51 @@
                     <div id="disqus_thread"></div>
                 </div>
 
-                <script>
-                (function() {
-                    // Originalfarben von <body> sichern
-                    var body = document.body;
-                    var origColor = body.style.color;
-                    var origBg = body.style.backgroundColor;
+    <script>
+    (function () {
+        // --- OKLCH-Fix für Disqus (nach juanman.tech) ---
+        const originalGetComputedStyle = window.getComputedStyle;
 
-                    // Disqus-freundliche Farben (nur HEX/RGB)
-                    body.style.color = '#e5e7eb';           // z.B. text-zinc-200
-                    body.style.backgroundColor = '#020617'; // z.B. bg-zinc-950
+        window.getComputedStyle = function (element, pseudoElt) {
+            const styles = originalGetComputedStyle(element, pseudoElt);
 
-                    // Disqus-Konfiguration
-                    var disqus_config = function () {
-                        this.page.url = '{{ uri.url(true) }}';      // kanonische URL
-                        this.page.identifier = '{{ page.id }}';     // eindeutige ID
-                    };
+            // Proxy, um getPropertyValue abzufangen
+            return new Proxy(styles, {
+                get(target, prop) {
+                    if (prop === 'getPropertyValue') {
+                        return function (property) {
+                            const value = target.getPropertyValue(property);
 
-                    // Disqus-Script laden
-                    var d = document, s = d.createElement('script');
-                    s.src = 'https://keepreading-ii-demo.disqus.com/embed.js'; // fester Shortname im Template
-                    s.setAttribute('data-timestamp', +new Date());
+                            if (value && value.includes && value.includes('oklch')) {
+                                // Wenn deine Seite gerade im Darkmode ist:
+                                if (document.documentElement.classList.contains('dark')) {
+                                    return 'black';
+                                }
+                                // Sonst Lightmode
+                                return 'white';
+                            }
 
-                    s.onload = function() {
-                        // Nach Initialisierung Farben wieder zurücksetzen
-                        setTimeout(function() {
-                            body.style.color = origColor;
-                            body.style.backgroundColor = origBg;
-                        }, 0);
-                    };
+                            return value;
+                        };
+                    }
+                    return target[prop];
+                }
+            });
+        };
 
-                    (d.head || d.body).appendChild(s);
-                })();
-                </script>
+        // --- Disqus Config ---
+        var disqus_config = function () {
+            this.page.url = '{{ uri.url(true) }}';      // kanonische URL der Seite
+            this.page.identifier = '{{ page.id }}';     // eindeutige ID der Seite
+        };
+
+        // --- Disqus Script laden ---
+        var d = document, s = d.createElement('script');
+        s.src = 'https://{{ disqus_shortname }}.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
                 <noscript>Enable JS to see the comments</noscript>
                 {% else %}
                 <!-- No Comments active -->
