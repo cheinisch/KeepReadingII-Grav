@@ -203,7 +203,7 @@ form:
             ##########################
             comment_section:
               type: section
-              title: Tracking
+              title: Comments
 
             comments.enabled:
               type: toggle
