@@ -1,7 +1,7 @@
 name: KeepReading II
 slug: keepreading-ii
 type: theme
-version: 0.9.1
+version: 0.9.2
 description: "KeepReading II is a light Tailwindcss based blog theme"
 icon: empire
 author:
@@ -204,17 +204,6 @@ form:
             comment_section:
               type: section
               title: Comments
-
-            comments.enabled:
-              type: toggle
-              label: Comments active
-              highlight: 0
-              default: 0
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
 
             comments.disqus:
               type: text
