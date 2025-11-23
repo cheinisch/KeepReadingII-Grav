@@ -25,25 +25,49 @@
                     </ul>
                 </div>
                 {% endif %}           
-                {% if comments.enabled and comments.disqus %}
+                {% if page.header.comments.enabled %}
+                {% set disqus_shortname = theme_var('comments.disqus') %}
+                <!-- Comments -->
                 <div id="comments" class="mx-auto max-w-3xl px-1 md:px-0 pt-8">
                     <div id="disqus_thread"></div>
                 </div>
 
                 <script>
-                var disqus_config = function () {
-                    this.page.url = '{{ uri.url(true) }}';      // kanonische URL der Seite
-                    this.page.identifier = '{{ page.id }}';     // eindeutige ID der Seite
-                };
-
                 (function() {
+                    // Originalfarben von <body> sichern
+                    var body = document.body;
+                    var origColor = body.style.color;
+                    var origBg = body.style.backgroundColor;
+
+                    // Disqus-freundliche Farben (nur HEX/RGB)
+                    body.style.color = '#e5e7eb';           // z.B. text-zinc-200
+                    body.style.backgroundColor = '#020617'; // z.B. bg-zinc-950
+
+                    // Disqus-Konfiguration
+                    var disqus_config = function () {
+                        this.page.url = '{{ uri.url(true) }}';      // kanonische URL
+                        this.page.identifier = '{{ page.id }}';     // eindeutige ID
+                    };
+
+                    // Disqus-Script laden
                     var d = document, s = d.createElement('script');
-                    s.src = 'https://{{ comments.disqus }}.disqus.com/embed.js';
+                    s.src = 'https://keepreading-ii-demo.disqus.com/embed.js'; // fester Shortname im Template
                     s.setAttribute('data-timestamp', +new Date());
+
+                    s.onload = function() {
+                        // Nach Initialisierung Farben wieder zurücksetzen
+                        setTimeout(function() {
+                            body.style.color = origColor;
+                            body.style.backgroundColor = origBg;
+                        }, 0);
+                    };
+
                     (d.head || d.body).appendChild(s);
                 })();
                 </script>
                 <noscript>Enable JS to see the comments</noscript>
+                {% else %}
+                <!-- No Comments active -->
                 {% endif %}
                 <div id="prevnext" class="mx-auto max-w-3xl px-1 md:px-0 mt-12">
                     {% if siblings|length > 1 and not page.isFirst and not page.isLast %}
