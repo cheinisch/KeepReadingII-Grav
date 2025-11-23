@@ -38,8 +38,8 @@ form:
               highlight: 1
               default: 0
               options:
-                1: Aktiv
-                0: Aus
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool  
 
@@ -76,8 +76,8 @@ form:
               highlight: 1
               default: 0
               options:
-                1: Aktiv
-                0: Aus
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool               
 
@@ -105,10 +105,21 @@ form:
               highlight: 1
               default: 1
               options:
-                1: Aktiv
-                0: Aus
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
               validate:
-                type: bool             
+                type: bool
+
+            social.colored:
+              type: toggle
+              label: Enable colored social media icons
+              highlight: 1
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
 
             social.title:
               type: text
@@ -121,8 +132,8 @@ form:
               highlight: 1
               default: 0
               options:
-                1: Aktiv
-                0: Aus
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool  
 
@@ -160,23 +171,53 @@ form:
             ##########################
             # Tracking
             ##########################
-            social_media_section:
+            tracking_section:
               type: section
               title: Tracking
 
             datatracking.enabled:
               type: toggle
-              label: Tracking aktiv
+              label: Activate Tracking Code
               highlight: 0
               default: 0
               options:
-                1: Aktiv
-                0: Aus
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool
 
             datatracking.code:
               type: textarea
               label: Tracking Code (HTML/JS)
-              help: Wird am Seitenende ausgegeben.
+              help: Add trackingcode to page
               rows: 6
+
+        comment_tab:
+          type: tab
+          title: Tracking
+          fields:
+
+
+            ##########################
+            # Comments
+            ##########################
+            comment_section:
+              type: section
+              title: Tracking
+
+            comments.enabled:
+              type: toggle
+              label: Comments active
+              highlight: 0
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            comments.disqus:
+              type: text
+              label: Disqus ID
+              placeholder: ""                
+         
